@@ -54,11 +54,9 @@ public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilt
     }
 
     @Override
-    public void doFilter(
-            ServletRequest req, ServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        final HttpServletRequest request = (HttpServletRequest) req;
+        final HttpServletResponse response = (HttpServletResponse) res;
 
         BearerToken bearerToken = (BearerToken) SecurityContextHolder.getContext().getAuthentication();
 
