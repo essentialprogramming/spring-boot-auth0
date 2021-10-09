@@ -15,7 +15,7 @@ public class CookieBasedRememberMe implements RememberMeServices {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		return CookieUtil.extractCookieValueByName(request.getCookies(), AUTHORIZATION)
-				.map(token -> new BearerToken(token))
+				.map(BearerToken::new)
 				.orElse(new BearerToken());
 	}
 

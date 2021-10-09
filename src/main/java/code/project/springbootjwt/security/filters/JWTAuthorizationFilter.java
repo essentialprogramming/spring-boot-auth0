@@ -22,7 +22,7 @@ import static code.project.springbootjwt.security.SecurityConstants.TOKEN;
 
 public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private AuthenticationManager authenticateManager;
+    private final AuthenticationManager authenticateManager;
 
     public JWTAuthorizationFilter(AuthenticationManager authManager, String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl);

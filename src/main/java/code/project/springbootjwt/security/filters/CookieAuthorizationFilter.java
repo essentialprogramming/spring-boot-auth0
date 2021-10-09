@@ -17,8 +17,8 @@ import java.io.IOException;
 
 public class CookieAuthorizationFilter extends RememberMeAuthenticationFilter {
 
-	private RememberMeServices rememberMeServices;
-	private AuthenticationManager authenticationManager;
+	private final RememberMeServices rememberMeServices;
+	private final AuthenticationManager authenticationManager;
 
 	public CookieAuthorizationFilter(
 			AuthenticationManager authenticationManager, RememberMeServices rememberMeServices) {
