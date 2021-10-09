@@ -24,8 +24,7 @@ public class Auth0AuthorizationFilter extends AbstractAuthenticationProcessingFi
         super(defaultFilterProcessesUrl);
     }
 
-	@Override public void doFilter(
-			ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+	@Override public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 

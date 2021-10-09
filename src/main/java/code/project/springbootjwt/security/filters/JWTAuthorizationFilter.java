@@ -46,9 +46,8 @@ public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilt
     }
 
     @Override
-    protected final void successfulAuthentication(HttpServletRequest request,
-                                                  HttpServletResponse response, FilterChain chain, Authentication authResult)
-            throws IOException, ServletException {
+    protected final void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                                  FilterChain chain, Authentication authResult) throws IOException, ServletException {
         response.addCookie(CookieUtil.createHTTPOnlyCookie(HttpHeaders.AUTHORIZATION, request.getParameter(TOKEN)));
         SecurityContextHolder.getContext().setAuthentication(authResult);
         chain.doFilter(request, response);

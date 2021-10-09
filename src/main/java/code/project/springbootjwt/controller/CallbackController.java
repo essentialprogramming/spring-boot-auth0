@@ -56,13 +56,14 @@ public class CallbackController {
                         code,
                         URLUtil.getBaseUrl(request) + TASKS_URL),
                 headers);
+
         TokenResponse tokenResponse = restTemplate.postForObject(
                 OAUTH0_TOKEN_ENDPOINT,
                 tokenRequest,
                 TokenResponse.class);
 
         assert tokenResponse != null;
-        return tokenResponse.getAccess_token();
+        return tokenResponse.getAccessToken();
     }
 
 }

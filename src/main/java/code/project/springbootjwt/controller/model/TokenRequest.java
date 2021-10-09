@@ -1,44 +1,54 @@
 package code.project.springbootjwt.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TokenRequest {
 
-    private String grant_type;
-    private String client_id;
-    private String client_secret;
+    @JsonProperty("grant_type")
+    private String grantType;
+
+    @JsonProperty("client_id")
+    private String clientId;
+
+    @JsonProperty("client_secret")
+    private String clientSecret;
+
+    @JsonProperty("code")
     private String code;
-    private String redirect_uri;
 
-    public TokenRequest(
-            String grant_type, String client_id, String client_secret, String code, String redirectUri) {
-        this.grant_type = grant_type;
-        this.client_id = client_id;
-        this.client_secret = client_secret;
+    @JsonProperty("redirect_uri")
+    private String redirectUri;
+
+    public TokenRequest(String grantType, String clientId, String clientSecret, String code, String redirectUri) {
+        this.grantType = grantType;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
         this.code = code;
-        this.redirect_uri = redirectUri;
+        this.redirectUri = redirectUri;
     }
 
-    public String getGrant_type() {
-        return grant_type;
+    public String getGrantType() {
+        return grantType;
     }
 
-    public void setGrant_type(String grant_type) {
-        this.grant_type = grant_type;
+    public void setGrantType(String grantType) {
+        this.grantType = grantType;
     }
 
-    public String getClient_id() {
-        return client_id;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setClient_id(String client_id) {
-        this.client_id = client_id;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public String getClient_secret() {
-        return client_secret;
+    public String getClientSecret() {
+        return clientSecret;
     }
 
-    public void setClient_secret(String client_secret) {
-        this.client_secret = client_secret;
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
     }
 
     public String getCode() {
@@ -49,11 +59,11 @@ public class TokenRequest {
         this.code = code;
     }
 
-    public String getRedirect_uri() {
-        return redirect_uri;
+    public String getRedirectUri() {
+        return redirectUri;
     }
 
-    public void setRedirect_uri(String redirect_uri) {
-        this.redirect_uri = redirect_uri;
+    public void setRedirectUri(String redirectUri) {
+        this.redirectUri = redirectUri;
     }
 }

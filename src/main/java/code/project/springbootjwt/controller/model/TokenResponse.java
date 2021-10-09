@@ -1,18 +1,27 @@
 package code.project.springbootjwt.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TokenResponse {
 
-    private String access_token;
-    private String scope;
-    private String expires_in;
-    private String token_type;
+    @JsonProperty("access_token")
+    private String accessToken;
 
-    public String getAccess_token() {
-        return access_token;
+    @JsonProperty("scope")
+    private String scope;
+
+    @JsonProperty("expires_in")
+    private String expiresIn;
+
+    @JsonProperty("token_type")
+    private String tokenType;
+
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getScope() {
@@ -23,19 +32,19 @@ public class TokenResponse {
         this.scope = scope;
     }
 
-    public String getExpires_in() {
-        return expires_in;
+    public String getExpiresIn() {
+        return expiresIn;
     }
 
-    public void setExpires_in(String expires_in) {
-        this.expires_in = expires_in;
+    public void setExpiresIn(String expiresIn) {
+        this.expiresIn = expiresIn;
     }
 
-    public String getToken_type() {
-        return token_type;
+    public String getTokenType() {
+        return tokenType;
     }
 
-    public void setToken_type(String token_type) {
-        this.token_type = token_type;
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
     }
 }
