@@ -38,7 +38,7 @@ public class CookieAuthorizationFilter extends RememberMeAuthenticationFilter {
 		if (rememberMeAuth.getPrincipal() != null) {
 			Authentication authentication = authenticationManager.authenticate(rememberMeAuth);
 			if (authentication.isAuthenticated()) {
-				((BearerToken) authentication).setCookieAuthentified(true);
+				((BearerToken) authentication).setCookieAuthenticated(true);
 			}
 		}
 
