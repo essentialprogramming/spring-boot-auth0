@@ -35,8 +35,8 @@ public class CallbackController {
     private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String code = request.getParameter("code");
-            String redirect_uri = request.getParameter("redirect_uri");
-            response.sendRedirect(redirect_uri + "?token=" + getAccessToken(code, request));
+            String redirectUri = request.getParameter("redirect_uri");
+            response.sendRedirect(redirectUri + "?token=" + getAccessToken(code, request));
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
             response.sendRedirect(TASKS_URL);
