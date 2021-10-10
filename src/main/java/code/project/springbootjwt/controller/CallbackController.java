@@ -36,14 +36,15 @@ public class CallbackController {
         try {
             String code = request.getParameter("code");
             String redirectUri = request.getParameter("redirect_uri");
-            response.sendRedirect(redirectUri + "?token=" + getAccessToken(code, request));
+            String accessToken = getAccessToken(code, request);
+            response.sendRedirect(redirectUri + "?token=" + accessToken);
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
             response.sendRedirect(TASKS_URL);
         }
     }
 
-    private String getAccessToken(String code, HttpServletRequest request) {
+    private static String getAccessToken(String code, HttpServletRequest request) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
