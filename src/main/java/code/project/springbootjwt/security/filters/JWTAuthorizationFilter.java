@@ -1,6 +1,7 @@
 package code.project.springbootjwt.security.filters;
 
 import code.project.springbootjwt.security.BearerToken;
+import code.project.springbootjwt.security.SecurityConstants;
 import code.project.springbootjwt.security.util.CookieUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,6 +28,7 @@ public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilt
 
     public JWTAuthorizationFilter(AuthenticationManager authManager, String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl);
+        super.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(SecurityConstants.TASKS_URL, "GET"));
         this.authenticateManager = authManager;
     }
 

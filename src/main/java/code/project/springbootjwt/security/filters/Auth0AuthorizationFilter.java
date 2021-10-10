@@ -1,10 +1,12 @@
 package code.project.springbootjwt.security.filters;
 
+import code.project.springbootjwt.security.SecurityConstants;
 import code.project.springbootjwt.security.util.URLUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,7 +23,9 @@ import static code.project.springbootjwt.security.SecurityConstants.TASKS_URL;
 public class Auth0AuthorizationFilter extends AbstractAuthenticationProcessingFilter {
 
     public Auth0AuthorizationFilter(String defaultFilterProcessesUrl) {
-        super(defaultFilterProcessesUrl);
+
+    	super(defaultFilterProcessesUrl);
+		super.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(SecurityConstants.TASKS_URL, "GET"));
     }
 
 	@Override public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -29,7 +33,7 @@ public class Auth0AuthorizationFilter extends AbstractAuthenticationProcessingFi
 		HttpServletResponse response = (HttpServletResponse) res;
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!authentication.isAuthenticated()) {
+		if (requiresAuthentication(request, response) && !authentication.isAuthenticated()) {
 			String redirectUri = URLUtil.getBaseUrl(request);
 			String callbackRedirectUri = redirectUri + "/callback?redirect_uri=" + TASKS_URL;
 			response.sendRedirect(
@@ -51,4 +55,5 @@ public class Auth0AuthorizationFilter extends AbstractAuthenticationProcessingFi
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		return null;
 	}
+
 }
