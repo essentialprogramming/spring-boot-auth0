@@ -11,7 +11,7 @@ More about OAuth2 specification and flows [here](https://github.com/digital-cons
 
 ## Spring Boot Auth0's security
 
-The server's endpoints are protected from external request and are only accessible with valid JWT token emitted by the Auth0 platform.
+The server's endpoints are protected from external request and are only accessible with a valid JWT token emitted by the Auth0 platform.
 The verification process consists in a filter chain containing the following two filters:
 * **Cookie verification filter**: for every incoming request for the protected resources Cookie is verified first. If it exists and it contain a valid JWT token, authorization is successful, else the filter chain jumps to the following filter: 
 * **JWT token verification filter**: if no successful Cookie authorization happened before the token verification filter checks if a valid JWT token is present as URL parameter. The filter chain jumps to the following filter:
