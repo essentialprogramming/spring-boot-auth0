@@ -7,7 +7,7 @@ Spring Boot Auth0 sample application is designed to incorporate a Resource Serve
 The authorization flow is implemented by following the OAuth 2.0 specification through the Auth0 identity platform. The client uses the authorization code grant to get the access token in order to access the resource server's API. 
 More about OAuth2 specification and flows [here](https://github.com/digital-consulting/oauth2)
 
-![oauth0-diagram](img/auth0.jpg)  
+![oauth0-diagram](img/auth0.png)  
 
 ## Spring Boot Auth0's security
 
