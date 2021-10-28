@@ -1,4 +1,4 @@
-package code.project.springbootjwt.model;
+package code.project.springbootjwt.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,18 +1,35 @@
 package code.project.springbootjwt.security.jwt;
 
+
 import code.project.springbootjwt.security.jwt.crypto.HMACProvider;
 import code.project.springbootjwt.security.jwt.crypto.RSAProvider;
+import code.project.springbootjwt.security.jwt.crypto.SignatureProvider;
+import code.project.springbootjwt.security.jwt.exception.SignatureValidationException;
 import code.project.springbootjwt.security.jwt.exception.TokenValidationException;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 public class JwtUtil {
 
+    private static final SignatureProvider provider = (jwt, key) -> {
+        try {
+            switch (jwt.getHeader().getAlgorithm().getSignatureType()) {
+                case "RSA":
+                    return RSAProvider.getInstance().verify(jwt, key);
+                case "HMAC":
+                    return HMACProvider.getInstance().verify(jwt, key);
+                default:
+                    return true;
+            }
+        } catch (IOException e) {
+            throw new SignatureValidationException();
+        }
+
+    };
     private JwtUtil() {
     }
 
@@ -20,7 +37,7 @@ public class JwtUtil {
      * Get the Header as defined in the 6.1 section of the JWT specification
      * (http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06#section-6.1)
      *
-     * @param base64jsonString
+     * @param base64jsonString base64 encoded Token
      * @return the decoded JWT header
      */
     public static String getHeader(String base64jsonString) {
@@ -31,7 +48,7 @@ public class JwtUtil {
      * Get the Claims Set as defined in the 6.1 section of the JWT specification
      * (http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06#section-6.1)
      *
-     * @param base64jsonString
+     * @param base64jsonString base64 encoded Token
      * @return the decoded JWT claim set
      */
     public static String getClaimsSet(String base64jsonString) {
@@ -39,29 +56,7 @@ public class JwtUtil {
     }
 
     private static String decodeJSON(String base64jsonString) {
-        return new String(Base64.getUrlDecoder().decode(base64jsonString), Charset.forName("UTF-8"));
-    }
-
-    /**
-     * Parse the jwt token from Authorization header.
-     *
-     * @param authorization authorization header.
-     * @return JWT token
-     */
-    public static String getJwtFromAuthorization(String authorization) {
-        String jwt = null;
-        if (authorization != null) {
-            String[] parts = authorization.split(" ");
-            if (parts.length == 2) {
-                String scheme = parts[0];
-                String credentials = parts[1];
-                Pattern pattern = Pattern.compile("^Bearer$", Pattern.CASE_INSENSITIVE);
-                if (pattern.matcher(scheme).matches()) {
-                    jwt = credentials;
-                }
-            }
-        }
-        return jwt;
+        return new String(Base64.getUrlDecoder().decode(base64jsonString), StandardCharsets.UTF_8);
     }
 
     /**
@@ -69,13 +64,13 @@ public class JwtUtil {
      *
      * @param jwt The JWT token Base64 encoded
      * @param key The key used to check signature
-     * @return
+     * @return ValidationResponse
      * @throws TokenValidationException If the JWT token has invalid format or is null, the key is
      *                                  null, the signature can't be validated.
      */
     public static ValidationResponse verifyJwt(String jwt, Key key) throws TokenValidationException {
         JwtClaims claims;
-        boolean isSignatureValid = false;
+        boolean isSignatureValid;
         boolean isClaimValid = false;
 
         if (key == null) {
@@ -84,18 +79,9 @@ public class JwtUtil {
         Jwt jwtToken = new Jwt(jwt);
 
         try {
-            JwtHeader jwtHeader = jwtToken.getHeader();
+            isSignatureValid = provider.verify(jwtToken, key);
+
             claims = jwtToken.getClaims();
-
-            if (jwtHeader.getAlgorithm().isRsa()) {
-                RSAProvider rsaProvider = RSAProvider.getInstance();
-                isSignatureValid = rsaProvider.verify(jwtToken, key);
-            }
-            if (jwtHeader.getAlgorithm().isHmac()) {
-                HMACProvider hmacProvider = HMACProvider.getInstance();
-                isSignatureValid = hmacProvider.verify(jwtToken, key);
-            }
-
             Date current = new Date();
             if (current.getTime() / 1000 < claims.getExpiration()) {
                 isClaimValid = true;
@@ -105,7 +91,7 @@ public class JwtUtil {
             throw new TokenValidationException("Token validation failed");
         }
 
-        return new ValidationResponse(isClaimValid && isSignatureValid, claims);
+        return new ValidationResponse(isSignatureValid  && isClaimValid , claims);
     }
 
     /**
@@ -125,5 +111,4 @@ public class JwtUtil {
             throw new TokenValidationException("Error parsing JWT");
         }
     }
-
 }

@@ -16,7 +16,7 @@ import java.sql.Driver;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan("code.project.springbootjwt.model")
+@ComponentScan("code.project.springbootjwt.entities")
 @EnableJpaRepositories("code.project.springbootjwt.repository")
 public class JPAConfig {
 
@@ -68,7 +68,7 @@ public class JPAConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource());
-        factoryBean.setPackagesToScan(new String[] { "code.project.springbootjwt.model" });
+        factoryBean.setPackagesToScan(new String[] { "code.project.springbootjwt.entities" });
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(true);
         factoryBean.setJpaVendorAdapter(vendorAdapter);

@@ -11,19 +11,20 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 public class CookieBasedRememberMe implements RememberMeServices {
 
-	@Override public Authentication autoLogin(
-			HttpServletRequest request, HttpServletResponse response) {
-
+	@Override
+	public Authentication autoLogin(HttpServletRequest request, HttpServletResponse response) {
 		return CookieUtil.extractCookieValueByName(request.getCookies(), AUTHORIZATION)
 				.map(BearerToken::new)
 				.orElse(new BearerToken());
 	}
 
-	@Override public void loginFail(HttpServletRequest request, HttpServletResponse response) {
+	@Override
+	public void loginFail(HttpServletRequest request, HttpServletResponse response) {
 		// do nothing
 	}
 
-	@Override public void loginSuccess(
+	@Override
+	public void loginSuccess(
 			HttpServletRequest request, HttpServletResponse response, Authentication successfulAuthentication) {
 		// do nothing
 	}

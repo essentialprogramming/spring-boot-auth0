@@ -1,14 +1,11 @@
 package code.project.springbootjwt.security.jwt;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import java.io.Serializable;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class JwtHeader implements Serializable {
 
     private static final long serialVersionUID = -415228395196698216L;
@@ -56,7 +53,5 @@ public class JwtHeader implements Serializable {
 
     static {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
     }
-
 }

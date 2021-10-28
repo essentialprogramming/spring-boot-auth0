@@ -1,6 +1,6 @@
 package code.project.springbootjwt.controller;
 
-import code.project.springbootjwt.model.Task;
+import code.project.springbootjwt.entities.Task;
 import code.project.springbootjwt.repository.TaskRepository;
 import org.springframework.web.bind.annotation.*;
 

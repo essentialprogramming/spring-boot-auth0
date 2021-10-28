@@ -1,6 +1,7 @@
 package code.project.springbootjwt.security.jwt;
 
 public enum SignatureAlgorithm {
+
     /**
      * No digital signature or MAC performed
      */
@@ -92,4 +93,9 @@ public enum SignatureAlgorithm {
         return getDescription().startsWith("RSASSA");
     }
 
+    public String getSignatureType() {
+        if (isHmac()) return "HMAC";
+        if (isRsa())  return "RSA";
+        return "NONE";
+    }
 }

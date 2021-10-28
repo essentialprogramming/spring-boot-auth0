@@ -1,7 +1,7 @@
 package code.project.springbootjwt.controller;
 
-import code.project.springbootjwt.controller.model.TokenRequest;
-import code.project.springbootjwt.controller.model.TokenResponse;
+import code.project.springbootjwt.model.TokenRequest;
+import code.project.springbootjwt.model.TokenResponse;
 import code.project.springbootjwt.security.util.URLUtil;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

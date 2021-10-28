@@ -36,7 +36,7 @@ public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilt
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         BearerToken bearerToken = (BearerToken) SecurityContextHolder.getContext().getAuthentication();
-        if (bearerToken.isCookieAuthenticated()) {
+        if (bearerToken.isPresentInCookie()) {
             return bearerToken;
         } else {
             String token = request.getParameter(TOKEN);
@@ -63,7 +63,7 @@ public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilt
 
         BearerToken bearerToken = (BearerToken) SecurityContextHolder.getContext().getAuthentication();
 
-        if (!requiresAuthentication(request, response) || bearerToken.isCookieAuthenticated()) {
+        if (!requiresAuthentication(request, response) || bearerToken.isPresentInCookie()) {
             chain.doFilter(request, response);
             return;
         }
@@ -71,14 +71,9 @@ public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilt
         Authentication authResult;
         try {
             authResult = attemptAuthentication(request, response);
-            if (authResult == null) {
-                return;
-            } else {
-                successfulAuthentication(request, response, chain, authResult);
-            }
+            successfulAuthentication(request, response, chain, authResult);
         } catch (AuthenticationException failed) {
             chain.doFilter(request, response);
-            return;
         }
     }
 }

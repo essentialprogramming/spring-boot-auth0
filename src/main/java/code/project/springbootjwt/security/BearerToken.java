@@ -6,7 +6,7 @@ public class BearerToken extends AbstractAuthenticationToken{
 
 	private static final long serialVersionUID = 1L;
 	private final Object bearer;
-	private boolean isCookieAuthenticated = false;
+	private boolean isPresentInCookie = false;
 
 	public BearerToken() {
 		super(null);
@@ -29,11 +29,15 @@ public class BearerToken extends AbstractAuthenticationToken{
 		return bearer;
 	}
 
-	public boolean isCookieAuthenticated() {
-		return isCookieAuthenticated;
+	public boolean isPresentInCookie() {
+		return isPresentInCookie;
 	}
 
-	public void setCookieAuthenticated(boolean cookieAuthenticated) {
-		isCookieAuthenticated = cookieAuthenticated;
+	public boolean isTokenPresent(){
+		return bearer != null;
+	}
+
+	public void setPresentInCookie(boolean presentInCookie) {
+		isPresentInCookie = presentInCookie;
 	}
 }

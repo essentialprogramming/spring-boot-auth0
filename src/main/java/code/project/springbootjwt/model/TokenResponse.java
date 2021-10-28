@@ -1,4 +1,4 @@
-package code.project.springbootjwt.controller.model;
+package code.project.springbootjwt.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

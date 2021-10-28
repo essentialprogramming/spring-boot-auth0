@@ -16,7 +16,7 @@ public class Jwt {
     private final String base64Content;
     private final String base64Signature;
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     static {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

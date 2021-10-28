@@ -6,6 +6,5 @@ import code.project.springbootjwt.security.jwt.exception.TokenValidationExceptio
 import java.security.Key;
 
 public interface SignatureProvider {
-    boolean verify(Jwt input, Key key)
-            throws TokenValidationException;
+    boolean verify(Jwt input, Key key) throws TokenValidationException;
 }
