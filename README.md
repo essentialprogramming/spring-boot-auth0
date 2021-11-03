@@ -13,7 +13,7 @@ More about OAuth2 specification and flows [here](https://github.com/digital-cons
 
 The server's endpoints are protected from external request and are only accessible with a valid JWT token emitted by the Auth0 platform.
 The verification process consists in a filter chain containing the following two filters:
-* **Cookie verification filter**: for every incoming request for the protected resources Cookie is verified first. If it exists and it contain a valid JWT token, authorization is successful, else the filter chain jumps to the following filter: 
+* **Cookie verification filter**: for every incoming request for the protected resources Cookie is verified first. If it exists and it contains a valid JWT token, authorization is successful, otherwise the filter chain jumps to the following filter: 
 * **JWT token verification filter**: if no successful Cookie authorization happened before the token verification filter checks if a valid JWT token is present as URL parameter. The filter chain jumps to the following filter:
 * **Auth0AuthorizationFilter**: in function of the result of the JWT token validation Auth0AuthorizationFilter forwards to the resource server's API or to the Auth0 user authentication page.
  
