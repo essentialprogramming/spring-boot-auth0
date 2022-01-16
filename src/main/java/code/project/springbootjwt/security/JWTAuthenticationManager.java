@@ -1,21 +1,25 @@
 package code.project.springbootjwt.security;
 
-import code.project.springbootjwt.security.util.TokenUtil;
+import code.project.springbootjwt.security.jwt.JwtUtil;
+import code.project.springbootjwt.security.jwt.ValidationResponse;
+import code.project.springbootjwt.security.util.PemUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
-import java.util.function.Function;
 
 public class JWTAuthenticationManager implements AuthenticationManager {
 
-	private final Function<Object, Boolean> isTokenValid = (token -> TokenUtil.parse(String.valueOf(token))
-			.map(claims -> true) // for now just check if was parsed successfully
-			.orElse(false));
-
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		authentication.setAuthenticated(isTokenValid.apply(authentication.getPrincipal()));
+		try {
+			BearerToken bearerToken = (BearerToken) authentication;
+			ValidationResponse validationResponse = JwtUtil.verifyJwt(bearerToken.getToken(), PemUtils.getPublicKeyFromPEM());
+			authentication.setAuthenticated(validationResponse.isValid());
+		} catch (Exception e) {
+			authentication.setAuthenticated(false);
+		}
+
 		return authentication;
 	}
 }

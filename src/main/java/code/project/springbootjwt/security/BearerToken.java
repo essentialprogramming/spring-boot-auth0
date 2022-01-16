@@ -2,40 +2,47 @@ package code.project.springbootjwt.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 
+import java.util.Collections;
+
 public class BearerToken extends AbstractAuthenticationToken{
 
 	private static final long serialVersionUID = 1L;
-	private final Object bearer;
+	private final String  token;
 	private boolean isPresentInCookie = false;
 
 	public BearerToken() {
-		super(null);
-		this.bearer = null;
+		super(Collections.emptyList());
+		this.token = null;
 		setAuthenticated(false);
 	}
 	
-	public BearerToken(Object token) {
-		super(null);
-		this.bearer = token;
+	public BearerToken(String token) {
+		super(Collections.emptyList());
+		this.token = token;
+	}
+
+	public String getToken() {
+		return this.token;
 	}
 
 	@Override
 	public Object getCredentials() {
-		return bearer;
+		return token;
 	}
 
 	@Override
 	public Object getPrincipal() {
-		return bearer;
+		return token;
+	}
+
+	public boolean isTokenPresent(){
+		return token != null;
 	}
 
 	public boolean isPresentInCookie() {
 		return isPresentInCookie;
 	}
 
-	public boolean isTokenPresent(){
-		return bearer != null;
-	}
 
 	public void setPresentInCookie(boolean presentInCookie) {
 		isPresentInCookie = presentInCookie;
